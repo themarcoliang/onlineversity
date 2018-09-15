@@ -3,6 +3,8 @@ recognition.lang = 'en-US';
 recognition.interimResults = true; 
 recognition.maxAlternatives = 5; 
 
+var text = document.querySelector('#text');
+
 recognition.start(); 
 
 recognition.onstart = function() { 
@@ -23,4 +25,5 @@ recognition.onresult = function(event) {
     var current = event.resultIndex; 
     var transcript = event.results[current][0].transcript; 
     console.log(transcript); 
+    text.textContent += transcript;
 }
