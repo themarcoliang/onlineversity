@@ -1,4 +1,3 @@
-var mongo = require('mongodb');
 var Peer = require('simplepeer.min.js');
 
 var p = new Peer({ initiator: location.hash === '#1', trickle: false })

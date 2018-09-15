@@ -10,4 +10,20 @@ var config = {
   firebase.initializeApp(config);
 
   // Get a reference to the realtime database service
-  var database = firebase.database();
+  var db = firebase.database();
+
+  function createUserDB(username, name, contacts, password) {
+
+    firebase.database().ref('users/' + username).set({
+      username: name,
+      contact: contacts,
+      password : password
+    });
+  }
+
+  function searchUser(username){
+    return firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
+      var username = snapshot.val().username;
+      // ...
+    });
+  }
