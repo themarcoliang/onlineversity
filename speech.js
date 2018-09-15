@@ -1,7 +1,7 @@
 var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
 recognition.lang = 'en-US'; 
 recognition.interimResults = false; 
-//recognition.continuous = true;
+recognition.continuous = true;
 recognition.maxAlternatives = 5; 
 
 var text = document.querySelector('#text');

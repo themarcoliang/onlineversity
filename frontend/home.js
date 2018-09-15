@@ -4,6 +4,14 @@
 
 setTimeout(getUserDB, 1000);
 
+// var signUpBtn = document.querySelector("#signUpBtn");
+
+// signUpBtn.addEventListener("click", );
+
+// function refer() {
+
+// }
+
 
 
 // function signIn(){
