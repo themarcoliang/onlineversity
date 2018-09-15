@@ -13,19 +13,17 @@ var config = {
   var db = firebase.database();
   var user = {};
 
-  function createUserDB(username, name, school, email, password) {
-    user = {
-      username: username,
-      name: name,
-      school: school,
-      email: email,
-    }
+  function createUserDB(userObj) {
+    user = userObj;
 
-    firebase.auth().createUserWithEmailAndPassword(email, password).then(function(data){
+    firebase.auth().createUserWithEmailAndPassword(user.email, user.password).then(function(data){
       console.log(data);
 
+      delete user.password;
       db.ref('users/' + data.user.uid).set(user);
-      user.uid = data.user.uid;
+
+      //redirect to home
+      window.location.replace('file:///C:/Users/sijia/Documents/Programming/HTN/frontend/home.html');
     }).catch(function(error) {
       console.log("create error:", error);
     });
@@ -33,16 +31,11 @@ var config = {
     
   }
 
-  function signInAuth(email, password, callback){
+  function signInAuth(email, password){
     firebase.auth().signInWithEmailAndPassword(email, password).then(function(data){
-      db.ref('/users/' + data.user.uid).once('value').then(function(snapshot) {
-        user = snapshot.val();
-        user.uid = data.user.uid;
-        console.log(user);
-        callback(user);
-      });
+        window.location.replace('file:///C:/Users/sijia/Documents/Programming/HTN/frontend/home.html');
     }).catch(function(error) {
-      console.log("sign in error:", error);
+      alert("sign in error:", error);
     });
 
   }
@@ -52,6 +45,20 @@ var config = {
       console.log("Sign-out successful.");
     }).catch(function(error) {
       console.log("Sign-out failed.");
+    });
+  }
+
+  function getUserDB(){
+    var userAuth = firebase.auth().currentUser;
+    if(!userAuth) {
+      alert("Not logged in");
+      window.location.replace('file:///C:/Users/sijia/Documents/Programming/HTN/frontend/sign_in.html');
+      return;
+    }
+    db.ref('/users/' +userAuth.uid).once('value').then(function(snapshot) {
+      user = snapshot.val();
+      user.uid = userAuth.uid;
+      console.log(user);
     });
   }
 
@@ -80,3 +87,4 @@ var config = {
     });
 
   }
+
