@@ -1,6 +1,7 @@
 var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
 recognition.lang = 'en-US'; 
-recognition.interimResults = true; 
+recognition.interimResults = false; 
+//recognition.continuous = true;
 recognition.maxAlternatives = 5; 
 
 var text = document.querySelector('#text');
@@ -24,6 +25,25 @@ recognition.onerror = function(event) {
 recognition.onresult = function(event) { 
     var current = event.resultIndex; 
     var transcript = event.results[current][0].transcript; 
-    console.log(transcript); 
+    console.log(transcript, "               ", event); 
     text.textContent += transcript;
 }
+
+recognition.onaudioend = function(){
+    console.log("audio end");
+}
+
+recognition.onend = function(){
+    console.log("end");
+    recognition.start(); 
+}
+recognition.onsoundend = function(){
+    console.log("sound end");
+}
+
+// var time = 0;
+
+// setInterval(function(){
+//     time++;
+//     console.log(time);
+// }, 1000);
